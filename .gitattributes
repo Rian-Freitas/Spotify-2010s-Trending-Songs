@@ -1,2 +1,2 @@
 * linguist-vendored
-*.rmd linguist-vendored=true
+*.rmd linguist-vendored=false
