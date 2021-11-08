@@ -1,0 +1,222 @@
+---
+title: "AEDV - Trabalho A2"
+subtitle: "Evolução dos Gêneros Musicais"
+author: "Rian Freitas da Silva"
+date: "18/06/2021"
+output:
+  rmdformats::downcute:
+    self_contained: true
+    thumbnails: true
+    lightbox: true
+    gallery: false
+    highlight: tango
+---
+|
+|
+<p style="font-size:20pt; font-style:bold">
+    Parte 1: Introdução
+</p>
+
+|     Eu considero esse trabalho uma continuação daquele feito para a A1, uma análise mais complexa utilizando a mesma base. Sempre fui fascinado por música e no que eu puder juntar programação e música eu o farei. Falando mais especificamente sobre a base, a _"Top Spotify Songs from 2010-2019 by Year"_ é uma compilação das 50 músicas mais tocadas em cada ano dentro da plataforma de _streaming Spotify©_, assim como informações técnicas de cada canção e valores de escalas criadas pelo _Spotift©_, como danceabilidade, acústica, popularidade, entre outras já explicadas na A1.
+
+|     O link de acesso à base encontra-se abaixo:
+
+https://www.kaggle.com/leonardopena/top-spotify-songs-from-20102019-by-year
+
+|       Nesse trabalho, o objetivo e função do gráfico é realizar uma comparação ao longo do tempo de forma a entender como se ocorreu a evolução dos gêneros musicais ao longo da segunda década do século XXI. Ou seja, ao longo desse período de tempo, quais gêneros ganharam força, quais tendências anteriores se descontinuaram e quais ainda se mantiveram presentes.
+|       Esse trabalho foi inspirado na imagem abaixo, que mostra essa mesma evolução dos gêneros entre 1950 e 2010, o "Google's Music Timeline".
+|
+
+<center>
+  ![Google's Music Timeline 1950-2010](https://earthlymission.com/wp-content/uploads/2017/04/google-music-timeline-infographic.png)
+</center>
+
+ 
+|       Como a base de dados que eu tinha começava em 2010, eu achei interessante fazer esse trabalho de modo a fazer uma continuação a esse gráfico.
+|       Por essa razão, o gráfico mais apropriado para a análise é o _heatmap_, que suporta as três variáveis que serão utilizadas (ano, gênero e frequência de músicas), sem a necessidade de produzir mais de um gráfico. Nele, os gêneros compõem o eixo y, enquanto os anos, o eixo x. Para a visualização da frequência, defini intervalos e, para cada um, correspondi a uma cor diferente. A legenda apresenta a correspondência entre a cor e o intervalo.
+|       Embora talvez houvesse paletas mais eficientes, eu utilizei um gradiente muito especial para as cores dos intervalos. Usei o site _Color Blender_ (https://meyerweb.com/eric/tools/color-blend/) para montar um gradiente utilizando as duas cores da logomarca do _Spotify©_ em hexadecimal (#1DB954 e #191414). Para deixar um contraste maior entre as cores da paleta, em fiz uma mistura entre o verde usado (#1DB954) e o branco, para criar tons mais claros. Eu usei o preto (#191414) como fundo e as cores dos intervalos são todas intermediárias entre as originais da logomarca. Assim, a paleta ficou:
+  
+```{r, eval=FALSE}
+
+<svg version="1.1"
+     baseProfile="full"
+     width="880" height="200"
+     xmlns="http://www.w3.org/2000/svg">
+	<style>
+		.heavy { font: bold 13px sans-serif; }
+		.normal { font: 13px sans-serif; }
+		.title { font: bold 25px sans-serif; }
+	</style>
+
+  <rect width="100%" height="100%" fill="#E3E3E3" />
+  
+  
+  <text x="440" y="23" text-anchor="middle" class="title" fill="#666666">Paleta Spotify</text>
+  
+  
+  <rect x="40" y="40" width="80" height="80" stroke="#333333" fill="#15CC4B" stroke-width="5" rx="15"/>
+  
+  <rect x="160" y="40" width="80" height="80" stroke="#333333" fill="#1C9B48" stroke-width="5" rx="15"/>
+  
+  <rect x="280" y="40" width="80" height="80" stroke="#333333" fill="#1B6E37" stroke-width="5" rx="15"/>
+  
+  <rect x="400" y="40" width="80" height="80" stroke="#333333" fill="#1A3A23" stroke-width="5" rx="15"/>
+  
+  <rect x="520" y="40" width="80" height="80" stroke="#333333" fill="#191E18" stroke-width="5" rx="15"/>
+  
+  <rect x="640" y="40" width="80" height="80" stroke="#333333" fill="#191414" stroke-width="5" rx="15"/>
+  
+  <rect x="760" y="40" width="80" height="80" stroke="#333333" fill="#666666" stroke-width="5" rx="15"/>
+
+  
+
+  <text x="80" y="140" text-anchor="middle" class="heavy" fill="#333333">#15CC4B</text>
+  <text x="80" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo ">20"</text>
+ 
+  <text x="200" y="140" text-anchor="middle" class="heavy" fill="#333333">#1C9B48</text>
+  <text x="200" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "10-20"</text>
+  
+  <text x="320" y="140" text-anchor="middle" class="heavy" fill="#333333">#1B6E37</text>
+  <text x="320" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "5-10"</text>
+  
+  <text x="440" y="140" text-anchor="middle" class="heavy" fill="#333333">#1A3A23</text>
+  <text x="440" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "1-5"</text>
+  
+  <text x="560" y="140" text-anchor="middle" class="heavy" fill="#333333">#191E18</text>
+  <text x="560" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "1"</text>
+  
+  <text x="680" y="140" text-anchor="middle" class="heavy" fill="#333333">#191414</text>
+  <text x="680" y="155" text-anchor="middle" class="normal" fill="#333333">Fundo do gráfico</text>
+  
+  <text x="800" y="140" text-anchor="middle" class="heavy" fill="#333333">#666666</text>
+  <text x="800" y="155" text-anchor="middle" class="heavy" fill="#333333">(gray40)</text>
+  <text x="800" y="170" text-anchor="middle" class="normal" fill="#333333">Título, legenda</text>
+  <text x="800" y="185" text-anchor="middle" class="normal" fill="#333333">e eixos</text>
+
+</svg>
+```
+
+<svg version="1.1" baseProfile="full" width="880" height="200" xmlns="http://www.w3.org/2000/svg">
+	<style>
+		.heavy { font: bold 13px sans-serif; }
+		.normal { font: 13px sans-serif; }
+		.title { font: bold 25px sans-serif; }
+	</style>
+  <rect width="100%" height="100%" fill="#E3E3E3" />
+  <text x="440" y="23" text-anchor="middle" class="title" fill="#666666">Paleta Spotify</text>
+  <rect x="40" y="40" width="80" height="80" stroke="#333333" fill="#15CC4B" stroke-width="5" rx="15"/>
+  <rect x="160" y="40" width="80" height="80" stroke="#333333" fill="#1C9B48" stroke-width="5" rx="15"/>
+  <rect x="280" y="40" width="80" height="80" stroke="#333333" fill="#1B6E37" stroke-width="5" rx="15"/>
+  <rect x="400" y="40" width="80" height="80" stroke="#333333" fill="#1A3A23" stroke-width="5" rx="15"/>
+  <rect x="520" y="40" width="80" height="80" stroke="#333333" fill="#191E18" stroke-width="5" rx="15"/>
+  <rect x="640" y="40" width="80" height="80" stroke="#333333" fill="#191414" stroke-width="5" rx="15"/>
+  <rect x="760" y="40" width="80" height="80" stroke="#333333" fill="#666666" stroke-width="5" rx="15"/>
+  <text x="80" y="140" text-anchor="middle" class="heavy" fill="#333333">#15CC4B</text>
+  <text x="80" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo ">20"</text>
+  <text x="200" y="140" text-anchor="middle" class="heavy" fill="#333333">#1C9B48</text>
+  <text x="200" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "10-20"</text>
+  <text x="320" y="140" text-anchor="middle" class="heavy" fill="#333333">#1B6E37</text>
+  <text x="320" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "5-10"</text>
+  <text x="440" y="140" text-anchor="middle" class="heavy" fill="#333333">#1A3A23</text>
+  <text x="440" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "1-5"</text>
+  <text x="560" y="140" text-anchor="middle" class="heavy" fill="#333333">#191E18</text>
+  <text x="560" y="155" text-anchor="middle" class="normal" fill="#333333">Intervalo "1"</text>
+  <text x="680" y="140" text-anchor="middle" class="heavy" fill="#333333">#191414</text>
+  <text x="680" y="155" text-anchor="middle" class="normal" fill="#333333">Fundo do gráfico</text>
+  <text x="800" y="140" text-anchor="middle" class="heavy" fill="#333333">#666666</text>
+  <text x="800" y="155" text-anchor="middle" class="heavy" fill="#333333">(gray40)</text>
+  <text x="800" y="170" text-anchor="middle" class="normal" fill="#333333">Título, legenda</text>
+  <text x="800" y="185" text-anchor="middle" class="normal" fill="#333333">e eixos</text>
+</svg>
+
+|
+|
+
+<p style="font-size:20pt; font-style:bold">
+    Parte 2: Construção do _Heatmap_
+</p>
+
+```{r, message=FALSE, warning=FALSE, fig.width=20, fig.align='center', fig.height=16}
+# Bibliotecas usadas
+
+library(tidyverse)
+library(rmarkdown)
+library(plyr)
+library(scales)
+library(grid)
+
+# Extraindo o banco de dados utilizado e selecionando as colunadas usadas
+
+top10s <- read_csv("top10s.csv") %>%
+  select(genero, ano)
+
+top10s
+
+# Montando a tabela de frequências para o heatmap
+
+top10s_para_heatmap_fase1 <- top10s %>% group_by(ano, genero) %>% dplyr::summarise(ano, genero, freq_genero = n()) %>% mutate(genero = fct_reorder(genero, freq_genero))
+
+# Definindo intervalos na tabela
+
+top10s_para_heatmap_fase2 <- top10s_para_heatmap_fase1 %>% mutate(freq_genero2=cut(freq_genero,breaks=c(0,1,5,10,20,max(freq_genero,na.rm=T)),
+                             labels=c("1","1-5","5-10","10-20",">20"))) %>%
+  mutate(freq_genero2=factor(as.character(freq_genero2),levels=rev(levels(freq_genero2))))
+
+p0 <- ggplot(top10s_para_heatmap_fase2, mapping = aes(x = ano, y = genero, fill = freq_genero2)) + geom_tile(colour="white",size=0.25)
+
+# Construindo o gráfico
+
+p1 <- p0 + guides(fill=guide_legend(title="Músicas por ano")) + labs(x="",y="",title="Evolução dos Gêneros Musicais, 2010-2019") + scale_y_discrete(expand=c(0,0)) + scale_x_continuous(expand=c(0,0), breaks=c(2010,2011,2012,2013,2014,2015,2016,2017,2018,2019))
+
+p2 <- p1 + scale_fill_manual(values = c("#15CC4B", "#1C9B48", "#1B6E37", "#1A3A23", "#191E18"))
+
+p2 + theme_gray(base_size=10) + theme(
+  legend.position="right",legend.direction="vertical",
+  legend.title=element_text(colour="gray40", size=20),
+  legend.margin=margin(grid::unit(0,"cm")),
+  legend.text=element_text(colour="gray40",size=15,face="bold"),
+  legend.key.height=grid::unit(2,"cm"),
+  legend.key.width=grid::unit(0.6,"cm"),
+  axis.text.x=element_text(size=20,colour="gray40"),
+  axis.text.y=element_text(vjust=0.4, size=20,colour="gray40"),
+  panel.background = element_rect(fill = "#191414",
+                                colour = "gray40",
+                                size = 0.5, linetype = "solid"),
+  panel.grid.major = element_blank(),
+  panel.grid.minor.y = element_line(colour="black"),
+  axis.ticks=element_line(size=0.4),
+  plot.background=element_blank(),
+  panel.border=element_blank(),
+  plot.margin=margin(0.7,0.4,0.1,0.2,"cm"),
+  plot.title=element_text(colour="gray40",hjust=0,size=40,face="bold"))                                           
+
+```
+
+|
+|
+
+<p style="font-size:20pt; font-style:bold">
+    Parte 3: Conclusões e informações adicionais
+</p>
+
+|       Com base no gráfico, podemos reconhecer alguns fatos importantes no cenário musical na década de 10 como:
+
+- Período de destaque dos gêneros "dance pop" e "pop";
+- Surgimento do "electropop" e "edm", vertentes do pop que se caracterizam pelo quase total abandono de instrumentos e pelo uso de aparatos eletrônicos. Esses dois novos gêneros, aliados ao sucesso dos dois citados no primeiro tópico, mostram que esse período se caracteriza por uma base cada vez mais eletrônica, deixando de lado músicas mais acústicas;
+- Peso muito grande do "canadian pop", representando sobretudo por _Drake_ e _Justin Bieber_, que até os dias atuais são campeões de _streaming_ (é importante lembrar que _"Baby"_, música de estreia de _Justin_ foi lançada em 2010 e é umas das primeiras na lista referente ao ano segundo o banco de dados usado);
+- Retorno com muita expressividade do gênero "boy band", alavancado pricipalmente pelo grupo _One Direction_ em 2012 e seguido por outros, como _5 Seconds Of Summer_, _The 1975_, _Wallows_ e etc.;
+- Notável participação do "british soul" no cenário mundial, como consequência do sucesso de _Amy Winehouse_, que fez o mundo não só dar atenção novamente à música inglesa (primeira onda inglesa é representada por _The Beatles_), como também trazer o _soul_ à tona, fazendo uma contraposição ao avanço da música eletrônica;
+- Um interessante destaque do "barbadian pop", representado __exclusivamente__ por _Rihanna_ e suas dezenas de músicas de sucesso em todos os anos;
+- Aparecimento da música latina nas paradas de sucesso mundiais, por conta principalmente do _hit_ mundial _"Despacito"_, de _Luis Fonsi_, o que rompeu um pouco com o protagonismo absoluto da língua inglesa no cenário musical internacional e trouxe artistas com músicas somente em espanhol, com _La Rosalía_, _Thalía_, _Karol G._, _J Balvin_, e etc.;
+- Desaparecimento do rock do _mainstream_;
+- Enfraquecimento de gêneros principais nos anos 2000, como o "indie-pop" e "hip-hop".
+
+|
+| Em relação a bibliotecas, além do _tidyverse_, eu precisei de mais algumas para a construção do _heatmap_.
+
+- plyr: com a função __cut()__, fiz os intervalos necessários para as cores;
+- scales: usei a função __scale_fill_manual()__ para pôr as cores no gráfico;
+- grid: a função __unit()__ para definir as margens em centímetros.
+
+|
+| No final, embora tenha sido extramamente cansativo, terminar esse trabalho me deu muito orgulho. Como eu disse na introdução, eu amo música e usar esse trabalho para entender um pouco mais desse universo me deixou muito feliz. Além disso, acredito que eu tenha uma ideia muita mais firme de como construir um __rmarkdown__ eficiente, um código __.svg__, sem contar o entendimento sobre construções de _heatmap_. Eu, até seis meses atrás, não sabia absolutamente nada de programação e ver o que eu já sou capaz de programar me deixa muito grato e orgulhoso, mas claro que há muito ainda para ser aprendido! 
